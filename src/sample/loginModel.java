@@ -1,6 +1,6 @@
 package sample;
 
-import dbutil.dbConnection;
+import dbUtil.dbConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,29 +13,28 @@ public class loginModel {
     public loginModel() {
         try {
             this.connection = dbConnection.getConnection();
-        } catch (SQLException ex) {
+        } catch (SQLException ex){
             ex.printStackTrace();
         }
-        if (this.connection == null) {
+        if (this.connection == null){
             System.exit(1);
         }
     }
-    public boolean isDatabaseConnection(){
+
+    public boolean isDatabaseconnecttion(){
         return this.connection != null;
     }
 
-    public boolean inDatabaseConnection() {
-        return this.connection != null;
-    }
-    public boolean isLogin(String user, String pass) throws SQLException {
+
+    public boolean isLogin(String user,String pass) throws SQLException {
         PreparedStatement pr = null;
         ResultSet rs = null;
-
+        //sql
         String sql = "select * from user where username = ? and password = ?";
         try {
             pr = this.connection.prepareStatement(sql);
             pr.setString(1,user);
-            pr.setString(2,pass);
+            pr.setString(2, pass);
 
             rs = pr.executeQuery();
             if (rs.next()){
@@ -43,12 +42,11 @@ public class loginModel {
             }
             return false;
         }catch (SQLException ex){
-         ex.printStackTrace();
-         return false;
-
+            ex.printStackTrace();
+            return false;
         }finally {
             pr.close();
-            pr.close();
+            rs.close();
         }
-    }//isLogin
-}//class
+    }//islogin
+}
